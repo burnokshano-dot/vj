@@ -1,0 +1,237 @@
+/* Home.css — Student Management Portal landing page */
+
+* {
+  box-sizing: border-box;
+}
+
+.home {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+/* ---------- Nav ---------- */
+
+.home-nav {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.home-nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-brand {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e3a5f;
+  letter-spacing: -0.02em;
+}
+
+.home-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.home-nav-links a {
+  text-decoration: none;
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.home-nav-links a:hover {
+  color: #1e3a5f;
+}
+
+.home-nav-cta {
+  background-color: #1e3a5f;
+  color: #ffffff !important;
+  padding: 9px 18px;
+  border-radius: 6px;
+}
+
+.home-nav-cta:hover {
+  background-color: #16304d;
+  color: #ffffff !important;
+}
+
+/* ---------- Hero ---------- */
+
+.home-hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 88px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.home-hero-text h1 {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px 0;
+  color: #111827;
+}
+
+.home-hero-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #6b7280;
+  max-width: 440px;
+  margin: 0 0 32px 0;
+}
+
+.home-hero-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.btn-primary {
+  background-color: #1e3a5f;
+  color: #ffffff;
+  border: 1px solid #1e3a5f;
+}
+
+.btn-primary:hover {
+  background-color: #16304d;
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #1f2937;
+  border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+  border-color: #1e3a5f;
+  color: #1e3a5f;
+}
+
+/* ---------- Roster preview card ---------- */
+
+.home-preview {
+  background-color: #f8f9fb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.home-preview-search {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
+.home-preview-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eef0f3;
+  font-size: 14px;
+}
+
+.home-preview-row:last-child {
+  border-bottom: none;
+}
+
+.muted {
+  color: #6b7280;
+}
+
+.tag-new {
+  color: #2e7d6b;
+  font-weight: 600;
+}
+
+/* ---------- Features ---------- */
+
+.home-features {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px 24px 88px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.feature-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 28px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.feature-card h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: #111827;
+}
+
+.feature-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ---------- Footer ---------- */
+
+.home-footer {
+  border-top: 1px solid #e5e7eb;
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+    padding: 56px 20px;
+  }
+
+  .home-features {
+    grid-template-columns: 1fr;
+    padding: 48px 20px 64px;
+  }
+
+  .home-hero-text h1 {
+    font-size: 32px;
+  }
+
+  .home-nav-links {
+    gap: 16px;
+  }
+}

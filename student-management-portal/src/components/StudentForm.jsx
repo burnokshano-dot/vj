@@ -1,62 +1,53 @@
-function StudentForm({ formData, onChange, onSubmit }) {
+function StudentForm({ formData, handleChange, handleSubmit }) {
   return (
-    <form onSubmit={onSubmit}>
-      <h2>Student Information</h2>
-
+    <form onSubmit={handleSubmit}>
       <div>
-        <label>Name:</label>
+        <label htmlFor="name">Name</label>
         <input
+          id="name"
           type="text"
           name="name"
           value={formData.name}
-          onChange={onChange}
+          onChange={handleChange}
           placeholder="Enter student name"
-          required
         />
       </div>
 
-      <br />
-
       <div>
-        <label>Username:</label>
+        <label htmlFor="username">Username</label>
         <input
+          id="username"
           type="text"
           name="username"
           value={formData.username}
-          onChange={onChange}
+          onChange={handleChange}
           placeholder="Enter username"
-          required
         />
       </div>
 
-      <br />
-
       <div>
-        <label>Email:</label>
+        <label htmlFor="email">Email</label>
         <input
+          id="email"
           type="email"
           name="email"
           value={formData.email}
-          onChange={onChange}
+          onChange={handleChange}
           placeholder="Enter email"
-          required
         />
       </div>
 
-      <br />
-
       <div>
-        <label>Phone:</label>
+        <label htmlFor="phone">Phone</label>
         <input
-          type="text"
+          id="phone"
+          type="tel"
           name="phone"
           value={formData.phone}
-          onChange={onChange}
+          onChange={handleChange}
           placeholder="Enter phone number"
         />
       </div>
-
-      <br />
 
       <button type="submit">
         Add Student

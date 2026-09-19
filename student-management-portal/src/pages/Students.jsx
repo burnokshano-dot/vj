@@ -1,40 +1,44 @@
-import { useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useStudents } from "../context/StudentsContext.jsx";
+import { useStudents } from "../context/StudentsContext";
 import "./Students.css";
 
 function Students() {
-  const { students, setStudents } = useStudents();
+  const { students, loading } = useStudents();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/users"
-        );
+  const [search, setSearch] = useState("");
 
-        setStudents(response.data);
-      } catch (error) {
-        console.error("Error fetching students:", error);
-      }
-    };
+  const filteredStudents = students.filter((student) =>
+    student.name
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
-    if (students.length === 0) {
-      fetchStudents();
-    }
-  }, [students.length, setStudents]);
+  if (loading) {
+    return (
+      <div className="students-page">
+        <div className="students-container">
+          <p>Loading students...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="students-page">
       <div className="students-container">
 
         {/* Header */}
+
         <div className="students-header">
+
           <div>
             <h1>Students</h1>
-            <p>{students.length} students</p>
+
+            <p>
+              {students.length} of {students.length} students
+            </p>
           </div>
 
           <button
@@ -43,19 +47,28 @@ function Students() {
           >
             Add a student
           </button>
+
         </div>
 
         {/* Search */}
+
         <div className="search-container">
           <input
             type="text"
             placeholder="Search by name..."
+            value={search}
+            onChange={(event) =>
+              setSearch(event.target.value)
+            }
           />
         </div>
 
         {/* Table */}
+
         <div className="students-table-container">
+
           <table className="students-table">
+
             <thead>
               <tr>
                 <th>NAME</th>
@@ -66,18 +79,44 @@ function Students() {
             </thead>
 
             <tbody>
-              {students.map((student) => (
-                <tr key={student.id}>
-                  <td>{student.name}</td>
-                  <td>{student.email}</td>
-                  <td>{student.phone}</td>
-                  <td>
-                    {student.address?.city || "—"}
+
+              {filteredStudents.length > 0 ? (
+                filteredStudents.map((student) => (
+                  <tr key={student.id}>
+
+                    <td className="student-name">
+                      {student.name}
+                    </td>
+
+                    <td>
+                      {student.email}
+                    </td>
+
+                    <td>
+                      {student.phone}
+                    </td>
+
+                    <td>
+                      {student.address?.city || "—"}
+                    </td>
+
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="4"
+                    className="no-students"
+                  >
+                    No students found.
                   </td>
                 </tr>
-              ))}
+              )}
+
             </tbody>
+
           </table>
+
         </div>
 
       </div>

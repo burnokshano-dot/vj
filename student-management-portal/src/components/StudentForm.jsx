@@ -1,8 +1,14 @@
-function StudentForm({ formData, handleChange, handleSubmit }) {
+function StudentForm({
+  formData,
+  handleChange,
+  handleSubmit,
+}) {
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name">Name</label>
+
+      <div className="form-group">
+        <label htmlFor="name">Full Name</label>
+
         <input
           id="name"
           type="text"
@@ -10,11 +16,13 @@ function StudentForm({ formData, handleChange, handleSubmit }) {
           value={formData.name}
           onChange={handleChange}
           placeholder="Enter student name"
+          required
         />
       </div>
 
-      <div>
+      <div className="form-group">
         <label htmlFor="username">Username</label>
+
         <input
           id="username"
           type="text"
@@ -22,23 +30,27 @@ function StudentForm({ formData, handleChange, handleSubmit }) {
           value={formData.username}
           onChange={handleChange}
           placeholder="Enter username"
+          required
         />
       </div>
 
-      <div>
-        <label htmlFor="email">Email</label>
+      <div className="form-group">
+        <label htmlFor="email">Email Address</label>
+
         <input
           id="email"
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="Enter email"
+          placeholder="Enter email address"
+          required
         />
       </div>
 
-      <div>
-        <label htmlFor="phone">Phone</label>
+      <div className="form-group">
+        <label htmlFor="phone">Phone Number</label>
+
         <input
           id="phone"
           type="tel"
@@ -46,12 +58,27 @@ function StudentForm({ formData, handleChange, handleSubmit }) {
           value={formData.phone}
           onChange={handleChange}
           placeholder="Enter phone number"
+          required
         />
       </div>
 
-      <button type="submit">
+      <div className="form-group">
+        <label htmlFor="city">City</label>
+
+        <input
+          id="city"
+          type="text"
+          name="city"
+          value={formData.city}
+          onChange={handleChange}
+          placeholder="Enter city"
+        />
+      </div>
+
+      <button type="submit" className="submit-student-btn">
         Add Student
       </button>
+
     </form>
   );
 }

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import StudentForm from "../components/StudentForm";
+import { useStudents } from "../Context/StudentsContext";
 
 function AddStudent() {
   const navigate = useNavigate();
+  const { addStudent } = useStudents();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -12,52 +13,24 @@ function AddStudent() {
     email: "",
     phone: "",
   });
-
   const [message, setMessage] = useState("");
 
-  // Handles changes in the form
   const handleChange = (event) => {
     const { name, value } = event.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  // Handles form submission
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "https://jsonplaceholder.typicode.com/users",
-        formData
-      );
-
-      console.log("New student:", response.data);
-
-      setMessage("Student added successfully!");
-
-      setTimeout(() => {
-        navigate("/students");
-      }, 1000);
-    } catch (error) {
-      console.error("Error adding student:", error);
-      setMessage("Failed to add student.");
-    }
+    addStudent(formData);
+    setMessage("Student added successfully!");
+    setTimeout(() => navigate("/students"), 800);
   };
 
   return (
     <div>
       <h1>Add Student</h1>
-
-      <StudentForm
-        formData={formData}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-      />
-
+      <StudentForm formData={formData} onChange={handleChange} onSubmit={handleSubmit} />
       {message && <p>{message}</p>}
     </div>
   );

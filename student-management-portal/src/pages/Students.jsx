@@ -1,18 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useStudents } from "../Context/StudentsContext";
 import "./Students.css";
 
-/**
- * Students — roster page for the Student Management Portal.
- *
- * Fetches the student list from JSONPlaceholder, lets the user filter
- * it by name, and links each row to its own details page.
- *
- * Uses: useState, useEffect, axios, map, filter, props, React Router Link.
- */
-
-// Child component — receives a single student via props.
 function StudentRow({ student }) {
   return (
     <Link to={`/students/${student.id}`} className="student-row">
@@ -25,33 +15,8 @@ function StudentRow({ student }) {
 }
 
 export default function Students() {
-  const [students, setStudents] = useState([]);
+  const { students, isLoading, error } = useStudents();
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        if (isMounted) {
-          setStudents(response.data);
-          setIsLoading(false);
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setError("Couldn't load the roster. Try refreshing the page.");
-          setIsLoading(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const filteredStudents = students.filter((student) =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -63,7 +28,9 @@ export default function Students() {
         <div>
           <h1>Students</h1>
           <p className="muted">
-            {isLoading ? "Loading roster…" : `${filteredStudents.length} of ${students.length} students`}
+            {isLoading
+              ? "Loading roster…"
+              : `${filteredStudents.length} of ${students.length} students`}
           </p>
         </div>
         <Link to="/students/add" className="btn btn-primary">

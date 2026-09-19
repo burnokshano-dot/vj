@@ -1,19 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useStudents } from "../Context/StudentsContext";
 import "./Search.css";
 
-/**
- * Search — dedicated search page for the Student Management Portal.
- *
- * Fetches the full roster once, then filters it client-side as the
- * user types. Same data source as Students.jsx, but focused purely
- * on finding a student quickly.
- *
- * Uses: useState, useEffect, axios, map, filter, props.
- */
-
-// Child component — receives a single student via props.
 function SearchResult({ student }) {
   return (
     <Link to={`/students/${student.id}`} className="result-card">
@@ -26,33 +15,8 @@ function SearchResult({ student }) {
 }
 
 export default function Search() {
-  const [students, setStudents] = useState([]);
+  const { students, isLoading, error } = useStudents();
   const [query, setQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        if (isMounted) {
-          setStudents(response.data);
-          setIsLoading(false);
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setError("Couldn't load students. Try refreshing the page.");
-          setIsLoading(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const trimmedQuery = query.trim().toLowerCase();
 

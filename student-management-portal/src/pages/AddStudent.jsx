@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import StudentForm from "../components/StudentForm";
-
+import "./AddStudent.css";
 function AddStudent() {
   const navigate = useNavigate();
 
@@ -49,18 +49,45 @@ function AddStudent() {
   };
 
   return (
-    <div>
-      <h1>Add Student</h1>
+  <div className="add-student-page">
+    <div className="add-student-container">
 
-      <StudentForm
-        formData={formData}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-      />
+      <div className="add-student-header">
+        <h1>Add Student</h1>
+        <p>Create a new student record</p>
+      </div>
 
-      {message && <p>{message}</p>}
+      {message && (
+        <div
+          className={`student-message ${
+            message.includes("successfully") ? "success" : "error"
+          }`}
+        >
+          {message}
+        </div>
+      )}
+
+      <div className="student-form-card">
+
+        <div className="form-card-title">
+          <div className="form-icon">+</div>
+
+          <div>
+            <h2>Student Information</h2>
+            <p>Enter the student's details below</p>
+          </div>
+        </div>
+
+        <StudentForm
+          formData={formData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
+
+      </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default AddStudent;

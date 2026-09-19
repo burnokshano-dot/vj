@@ -1,105 +1,40 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import axios from "axios";
-import "./Students.css";
+import { useStudents } from "../context/StudentsContext.jsx";
 
-/**
- * Students — roster page for the Student Management Portal.
- *
- * Fetches the student list from JSONPlaceholder, lets the user filter
- * it by name, and links each row to its own details page.
- *
- * Uses: useState, useEffect, axios, map, filter, props, React Router Link.
- */
-
-// Child component — receives a single student via props.
-function StudentRow({ student }) {
-  return (
-    <Link to={`/students/${student.id}`} className="student-row">
-      <span className="student-name">{student.name}</span>
-      <span className="student-email muted">{student.email}</span>
-      <span className="student-phone muted">{student.phone}</span>
-      <span className="student-city muted">{student.address?.city}</span>
-    </Link>
-  );
-}
-
-export default function Students() {
-  const [students, setStudents] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+function Students() {
+  const { students, setStudents } = useStudents();
 
   useEffect(() => {
-    let isMounted = true;
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/users"
+        );
 
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        if (isMounted) {
-          setStudents(response.data);
-          setIsLoading(false);
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setError("Couldn't load the roster. Try refreshing the page.");
-          setIsLoading(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
+        setStudents(response.data);
+      } catch (error) {
+        console.error("Error fetching students:", error);
+      }
     };
-  }, []);
 
-  const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    // Only fetch the initial students
+    if (students.length === 0) {
+      fetchStudents();
+    }
+  }, [students.length, setStudents]);
 
   return (
-    <div className="students-page">
-      <header className="students-header">
-        <div>
-          <h1>Students</h1>
-          <p className="muted">
-            {isLoading ? "Loading roster…" : `${filteredStudents.length} of ${students.length} students`}
-          </p>
+    <div>
+      {/* your existing Students UI */}
+
+      {students.map((student) => (
+        <div key={student.id}>
+          {student.name}
         </div>
-        <Link to="/students/add" className="btn btn-primary">
-          Add a student
-        </Link>
-      </header>
-
-      <div className="students-search">
-        <input
-          type="text"
-          placeholder="Search by name…"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-        />
-      </div>
-
-      {error && <p className="students-error">{error}</p>}
-
-      {!isLoading && !error && (
-        <div className="students-table">
-          <div className="students-table-head">
-            <span>Name</span>
-            <span>Email</span>
-            <span>Phone</span>
-            <span>City</span>
-          </div>
-
-          {filteredStudents.length > 0 ? (
-            filteredStudents.map((student) => (
-              <StudentRow key={student.id} student={student} />
-            ))
-          ) : (
-            <p className="students-empty">No students match "{searchTerm}".</p>
-          )}
-        </div>
-      )}
+      ))}
     </div>
   );
 }
+
+export default Students;

@@ -1,49 +1,75 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
-const StudentsContext = createContext(null);
-const STORAGE_KEY = "rollcall-students";
+const StudentsContext = createContext();
 
 export function StudentsProvider({ children }) {
   const [students, setStudents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  // Load students when the application starts
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      setStudents(JSON.parse(saved));
-      setIsLoading(false);
-      return;
-    }
+    const loadStudents = async () => {
+      try {
+        const savedStudents = localStorage.getItem("students");
 
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        setStudents(response.data);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(response.data));
-      })
-      .catch(() => setError("Couldn't load the roster."))
-      .finally(() => setIsLoading(false));
+        if (savedStudents) {
+          setStudents(JSON.parse(savedStudents));
+        } else {
+          const response = await axios.get(
+            "https://jsonplaceholder.typicode.com/users"
+          );
+
+          setStudents(response.data);
+          localStorage.setItem(
+            "students",
+            JSON.stringify(response.data)
+          );
+        }
+      } catch (error) {
+        console.error("Error loading students:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadStudents();
   }, []);
 
-  const addStudent = (studentData) => {
-    const newStudent = {
-      ...studentData,
-      id: Date.now(), // simple unique id
-    };
-    const updated = [...students, newStudent];
-    setStudents(updated);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    return newStudent;
-  };
+  // Save whenever students change
+  useEffect(() => {
+    if (!loading) {
+      localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+      );
+    }
+  }, [students, loading]);
 
-  const getStudent = (id) =>
-    students.find((s) => String(s.id) === String(id));
+  // Add a student to the list
+  const addStudent = (student) => {
+    const newStudent = {
+      ...student,
+      id: Date.now(),
+      address: {
+        city: student.city || "—",
+      },
+    };
+
+    setStudents((currentStudents) => [
+      ...currentStudents,
+      newStudent,
+    ]);
+  };
 
   return (
     <StudentsContext.Provider
-      value={{ students, isLoading, error, addStudent, getStudent }}
+      value={{
+        students,
+        setStudents,
+        addStudent,
+        loading,
+      }}
     >
       {children}
     </StudentsContext.Provider>

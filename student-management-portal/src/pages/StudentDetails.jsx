@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { useStudents } from "../Context/StudentsContext";
+import { useStudents } from "/Context/StudentsContext";
 
 function StudentDetails() {
   const { id } = useParams();

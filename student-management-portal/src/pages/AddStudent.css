@@ -1,0 +1,228 @@
+/* ================================
+   ADD STUDENT PAGE
+================================ */
+
+.add-student-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 40px 30px;
+}
+
+.add-student-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Header */
+
+.add-student-header {
+  margin-bottom: 25px;
+}
+
+.add-student-header h1 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.add-student-header p {
+  margin: 8px 0 0;
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* Message */
+
+.student-message {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.student-message.success {
+  color: #166534;
+  background: #dcfce7;
+  border: 1px solid #bbf7d0;
+}
+
+.student-message.error {
+  color: #991b1b;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+}
+
+/* Card */
+
+.student-form-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.07);
+  border: 1px solid #e5e7eb;
+}
+
+/* Card heading */
+
+.form-card-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 25px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.form-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+  background: #2563eb;
+
+  border-radius: 12px;
+  font-size: 28px;
+  font-weight: 300;
+}
+
+.form-card-title h2 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 20px;
+}
+
+.form-card-title p {
+  margin: 4px 0 0;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+/* ================================
+   FORM
+================================ */
+
+.student-form-card form {
+  display: grid;
+  gap: 20px;
+}
+
+.student-form-card label {
+  display: block;
+  margin-bottom: 8px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.student-form-card input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 13px 15px;
+
+  color: #1e293b;
+  background: #ffffff;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  font-size: 14px;
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+.student-form-card input::placeholder {
+  color: #a1a1aa;
+}
+
+.student-form-card input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Form groups */
+
+.student-form-card .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Buttons */
+
+.student-form-card button {
+  margin-top: 8px;
+  padding: 13px 24px;
+
+  color: white;
+  background: #2563eb;
+
+  border: none;
+  border-radius: 9px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.student-form-card button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.student-form-card button:active {
+  transform: translateY(0);
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+  .add-student-page {
+    padding: 25px 15px;
+  }
+
+  .add-student-header h1 {
+    font-size: 26px;
+  }
+
+  .student-form-card {
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .form-card-title {
+    padding-bottom: 20px;
+    margin-bottom: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-student-page {
+    padding: 20px 12px;
+  }
+
+  .student-form-card {
+    padding: 18px;
+  }
+
+  .form-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 24px;
+  }
+
+  .form-card-title h2 {
+    font-size: 17px;
+  }
+}
